@@ -1,0 +1,46 @@
+{
+  "name": "api-email-unit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3005",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.17",
+    "@mui/material": "^5.15.17",
+    "@mui/x-date-pickers": "^7.4.0",
+    "@mui/x-date-pickers-pro": "^7.4.0",
+    "@supabase/supabase-js": "^2.43.2",
+    "axios": "^1.6.8",
+    "dayjs": "^1.11.11",
+    "ethereumjs-abi": "^0.6.8",
+    "ethereumjs-util": "^7.1.5",
+    "ethers": "^6.12.1",
+    "fs": "^0.0.1-security",
+    "googleapis": "^137.1.0",
+    "next": "^14.2.3",
+    "next-auth": "^4.x.x",
+    "notistack": "^3.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "solc": "^0.8.25",
+    "sonner": "^1.4.41",
+    "styled-components": "^6.1.11"
+  },
+  "devDependencies": {
+    "@types/ethereumjs-abi": "^0.6.5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.2",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
