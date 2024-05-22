@@ -33,7 +33,7 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
   const scrollToSection = (sectionId: string) => {
     const sectionElement = document.getElementById(sectionId);
     const offset = 128;
-    if (sectionElement) {
+    if (sectionElement && typeof window !== 'undefined') {
       const targetScroll = sectionElement.offsetTop - offset;
       sectionElement.scrollIntoView({ behavior: 'smooth' });
       window.scrollTo({

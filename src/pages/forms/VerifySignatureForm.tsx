@@ -197,6 +197,10 @@ export default function VerifySignatureForm ({
     data: Partial<AccountDataSchema>,
     onChange: (data: Partial<AccountDataSchema>) => void,
 }) {
+    if (typeof window === 'undefined') {
+        console.log("window is undefined")
+        return;
+    }
     const provider = new ethers.BrowserProvider(window.ethereum)
     const [contractData, setContractData] = useState<Partial<PaymentChannelDataSchema>>({
         contractAddress: '',

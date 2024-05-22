@@ -148,13 +148,18 @@ export default function CreatePaymentSignatureForm ({
 
         const resData = await res.json()
 
-        const signature = await window.ethereum.request({
-            method: 'personal_sign',
-            params: [
-                '0x' + resData['paymentMessage'],
-                contractData.senderAddress
-            ]
-        })
+        let signature
+        if (typeof window !== 'undefined') {
+            signature = await window.ethereum.request({
+                method: 'personal_sign',
+                params: [
+                    '0x' + resData['paymentMessage'],
+                    contractData.senderAddress
+                ]
+            })
+        }
+
+        
 
         if (signature) {
             const provider = new ethers.BrowserProvider(window.ethereum)
