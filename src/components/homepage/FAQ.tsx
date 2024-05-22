@@ -140,7 +140,7 @@ export default function FAQ() {
               <br></br>
               For the duration of this payment channel, the sender can only make cumulative payments less than or equal to the amount escrowed.
               <br></br>
-              If the expiration date passes and the receiver has not claimed their payment, the sender can withdraw all the amount escrowed from a payment channel by “claiming a timeout,” which voids any payment signatures they sent to the receiver.
+              If the expiration date passes and the receiver has not claimed their payment, the sender can withdraw all the amount escrowed from a payment channel by &quot;claiming a timeout&quot;, which voids any payment signatures they sent to the receiver.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -172,7 +172,7 @@ export default function FAQ() {
               <br></br>
               The payment signature, contract address, cumulative amount, and sender address should be sent to the receiver off-chain: e.g. e-mail.
               <br></br>
-              We can help you automatically send e-mail to the receiver including your selected signed signatures! You can go to "Account Settings" at the top-right corner, and Sign In with Google first. Then, click "My Signatures", select the signatures you want to send to the receiver at once, and fill in their email address, and click "Share".
+              We can help you automatically send e-mail to the receiver including your selected signed signatures! You can go to &quot;Account Settings&quot; at the top-right corner, and Sign In with Google first. Then, click &quot;My Signatures&quot;, select the signatures you want to send to the receiver at once, and fill in their email address, and click &quot;Share&quot;.
             </Typography>
           </AccordionDetails>
         </Accordion>
