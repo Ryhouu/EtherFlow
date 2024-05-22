@@ -263,7 +263,7 @@ export default function PaymentChannelsTable({
         if (open) {
             handleFetch()
         }
-    }, [open]); 
+    }, [open, handleFetch]); 
     
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof Data>('expiration'); //TODO: created at?

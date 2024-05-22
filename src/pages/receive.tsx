@@ -74,8 +74,8 @@ export default function ReceiveMainPage() {
     };
 
     const forms = [
-        <VerifySignatureForm {...accountMenuProps} />,
-        <ClaimPaymentForm {...accountMenuProps} />
+        <VerifySignatureForm key={0} {...accountMenuProps} />,
+        <ClaimPaymentForm key={1} {...accountMenuProps} />
     ]
 
     const [selectedIndex, setSelectedIndex] = useState(0);
