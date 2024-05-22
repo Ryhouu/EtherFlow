@@ -116,6 +116,20 @@ export default function CreatePaymentSignatureForm ({
         senderAddress: data.account,
         isVerified: false
     })
+    const [isSigning, setIsSigning] = useState(false);
+    const [signSuccess, setSignSuccess] = useState(false);
+    const [logSignature, setLogSignature] = useState(true);
+    const [logSuccess, setLogSuccess] = useState(false);
+    const [emailDetails, setEmailDetails] = useState({
+        to: '',
+        subject: '',
+        body: ''
+    });
+    const [openDial, setOpenDial] = React.useState(false);
+    const [openShareFormDialog, setOpenShareFormDialog] = React.useState(false);
+
+    const { data: session, status } = useSession();
+
     const props = {
         isConnected: isConnected,
         data: contractData, 
@@ -123,10 +137,6 @@ export default function CreatePaymentSignatureForm ({
             setContractData({ ...contractData, ...data })
         }
     }
-    const [isSigning, setIsSigning] = useState(false);
-    const [signSuccess, setSignSuccess] = useState(false);
-    const [logSignature, setLogSignature] = useState(true);
-    const [logSuccess, setLogSuccess] = useState(false);
 
     const handleSubmit = async() => {
         setIsSigning(true); 
@@ -158,8 +168,6 @@ export default function CreatePaymentSignatureForm ({
                 ]
             })
         }
-
-        
 
         if (signature) {
             const provider = new ethers.BrowserProvider(window.ethereum)
@@ -249,21 +257,16 @@ export default function CreatePaymentSignatureForm ({
 
 
 
-    const { data: session, status } = useSession();
-    const [emailDetails, setEmailDetails] = useState({
-        to: '',
-        subject: '',
-        body: ''
-    });
+    
 
     console.log("[Sending] Session:", session);
     console.log("[Sending] Session status:", status);
 
 
-    const [openDial, setOpenDial] = React.useState(false);
+    
     const handleOpenDial = () => setOpenDial(true);
     const handleCloseDial = () => setOpenDial(false);
-    const [openShareFormDialog, setOpenShareFormDialog] = React.useState(false);
+    
 
     const actions = [
         { icon: <FileCopyIcon />, name: 'Copy', onClick: () => {} },

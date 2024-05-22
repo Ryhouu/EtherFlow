@@ -164,13 +164,20 @@ export default function ClaimPaymentForm ({
     data: Partial<AccountDataSchema>,
     onChange: (data: Partial<AccountDataSchema>) => void,
 }) {
-    if (typeof window === 'undefined') {
-        console.log("window is undefined")
-        return;
-    }
-    const provider = new ethers.BrowserProvider(window.ethereum)
+
+    const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
     const [verifiedSignatureData, setVerifiedSignatureData] = React.useState<VerifiedSignatureLogDataSchema[]>([])
     const [selectedIndex, setSelectedIndex] = React.useState<number | null>(null);
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [transactionSuccess, setTransactionSuccess] = useState(false);
+
+    // Setting up the provider on client-side
+    React.useEffect(() => {
+        if (typeof window !== 'undefined' && window.ethereum) {
+            const newProvider = new ethers.BrowserProvider(window.ethereum);
+            setProvider(newProvider);
+        }
+    }, []);
 
     const handleFetch = async () => {
         const res = await fetchWithToast(`/api/log/verified-signatures?account=${data.account}`, {
@@ -182,18 +189,18 @@ export default function ClaimPaymentForm ({
         }
     } 
 
-    React.useEffect(() => {
-        console.log("verified signatures:", verifiedSignatureData)
-    }, [verifiedSignatureData]); 
+    // React.useEffect(() => {
+    //     console.log("verified signatures:", verifiedSignatureData)
+    // }, [verifiedSignatureData]); 
 
-    React.useEffect(() => {
-        console.log("Selected index: ", selectedIndex)
-    }, [selectedIndex])
+    // React.useEffect(() => {
+    //     console.log("Selected index: ", selectedIndex)
+    // }, [selectedIndex])
 
-    const [isProcessing, setIsProcessing] = useState(false);
-    const [transactionSuccess, setTransactionSuccess] = useState(false);
-
+    
     const handleSubmit = async () => {
+        if (!provider || selectedIndex === null) return;
+
         setIsProcessing(true); 
         setTransactionSuccess(false);
 

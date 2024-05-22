@@ -197,16 +197,23 @@ export default function VerifySignatureForm ({
     data: Partial<AccountDataSchema>,
     onChange: (data: Partial<AccountDataSchema>) => void,
 }) {
-    if (typeof window === 'undefined') {
-        console.log("window is undefined")
-        return;
-    }
-    const provider = new ethers.BrowserProvider(window.ethereum)
+    const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
     const [contractData, setContractData] = useState<Partial<PaymentChannelDataSchema>>({
         contractAddress: '',
         isDeployed: false,
         isVerified: false
     })
+    const [isValidSignature, setIsValidSignature] = useState<boolean>()
+    const [verifySignatureAlertMsg, setVerifySignatureAlertMsg] = React.useState<string>('')
+    const [logSuccess, setLogSuccess] = useState(false);
+
+    React.useEffect(() => {
+        if (typeof window !== 'undefined' && window.ethereum) {
+            const newProvider = new ethers.BrowserProvider(window.ethereum);
+            setProvider(newProvider);
+        }
+    }, []);
+
     const props = {
         isConnected: isConnected,
         data: contractData, 
@@ -215,11 +222,11 @@ export default function VerifySignatureForm ({
         }
     }
 
-    const [isValidSignature, setIsValidSignature] = useState<boolean>()
-    const [verifySignatureAlertMsg, setVerifySignatureAlertMsg] = React.useState<string>('')
-    const [logSuccess, setLogSuccess] = useState(false);
+    
 
     const handleSubmit = async() => {
+        if (!provider) return;
+
         const contractAddress = contractData.contractAddress ? contractData.contractAddress : '';
         const signature = contractData.signature ? contractData.signature : '';
         const amount = contractData.claimAmountWei ? contractData.claimAmountWei : 0;
@@ -309,7 +316,7 @@ export default function VerifySignatureForm ({
         }
     }
 
-    const steps: StepItem[] = [
+    const steps: StepItem[] = provider ? [
         {
           label: 'Basic Info',
           description: `Fill in the required information to verify the payment signature.`,
@@ -317,7 +324,7 @@ export default function VerifySignatureForm ({
           continueLabel: 'Verify',
           handleNext: handleSubmit
         },
-    ];
+    ] : [];
 
 
     return (

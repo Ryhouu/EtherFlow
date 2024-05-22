@@ -196,17 +196,16 @@ export default function ExtendPaymentChannelForm ({
     data: Partial<AccountDataSchema>,
     onChange: (data: Partial<AccountDataSchema>) => void,
 }) {
-    if (typeof window === 'undefined') {
-        console.log("window is undefined")
-        return;
-    }
-    const provider = new ethers.BrowserProvider(window.ethereum)
+    const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
     const [contractData, setContractData] = useState<Partial<PaymentChannelDataSchema>>({
         contractAddress: '',
         senderAddress: data.account,
         isDeployed: false,
         isVerified: false
     })
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [transactionSuccess, setTransactionSuccess] = useState(false);
+
     const props = {
         isConnected: isConnected,
         data: contractData, 
@@ -215,10 +214,16 @@ export default function ExtendPaymentChannelForm ({
         }
     }
 
-    const [isProcessing, setIsProcessing] = useState(false);
-    const [transactionSuccess, setTransactionSuccess] = useState(false);
+    React.useEffect(() => {
+        if (typeof window !== 'undefined' && window.ethereum) {
+            const newProvider = new ethers.BrowserProvider(window.ethereum);
+            setProvider(newProvider);
+        }
+    }, []);
 
     const handleSubmit = async() => {
+        if (!provider) return;
+
         setIsProcessing(true); 
         setTransactionSuccess(false);
 
@@ -272,7 +277,7 @@ export default function ExtendPaymentChannelForm ({
         }
     }
 
-    const steps: StepItem[] = [
+    const steps: StepItem[] = provider ? [
         {
           label: 'Basic Info',
           description: `Fill in the required information to extend your payment channel contract.`,
@@ -280,7 +285,7 @@ export default function ExtendPaymentChannelForm ({
           continueLabel: 'Extend',
           handleNext: handleSubmit
         },
-    ];
+    ] : [];
 
     return (
         <Box>

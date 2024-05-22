@@ -179,16 +179,23 @@ export default function CreatePaymentChannelForm ({
     data: Partial<AccountDataSchema>,
     onChange: (data: Partial<AccountDataSchema>) => void,
 }) {
-    if (typeof window === 'undefined') {
-        console.log("window is undefined")
-        return;
-    }
-    const provider = new ethers.BrowserProvider(window.ethereum)
+    const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
     const [contractData, setContractData] = useState<Partial<PaymentChannelDataSchema>>({
         senderAddress: data.account,
         isDeployed: false,
         isVerified: false
     })
+    const [isDeploying, setIsDeploying] = useState(false);
+    const [deploySuccess, setDeploySuccess] = useState(false);
+    const [logSuccess, setLogSuccess] = useState(false);
+
+    React.useEffect(() => {
+        if (typeof window !== 'undefined' && window.ethereum) {
+            const newProvider = new ethers.BrowserProvider(window.ethereum);
+            setProvider(newProvider);
+        }
+    }, []);
+
     const props = {
         isConnected: isConnected,
         data: contractData, 
@@ -196,14 +203,14 @@ export default function CreatePaymentChannelForm ({
             setContractData({ ...contractData, ...data })
         }
     }
-    const [isDeploying, setIsDeploying] = useState(false);
-    const [deploySuccess, setDeploySuccess] = useState(false);
 
     useEffect(() => {
         console.log("contractData.contractAddress:", contractData.contractAddress)
     }, [contractData.contractAddress]); 
     
     const handleSubmitDeploy = async() => {
+        if (!provider) return;
+
         console.log("Handle Submit Deploy contract")
         setIsDeploying(true); 
         setDeploySuccess(false);
@@ -291,7 +298,7 @@ export default function CreatePaymentChannelForm ({
         }
     }
 
-    const [logSuccess, setLogSuccess] = useState(false);
+    
 
     const handleLog = async() => {
         console.log("Logging Contract: ", contractData)

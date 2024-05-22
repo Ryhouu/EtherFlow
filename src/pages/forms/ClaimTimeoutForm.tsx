@@ -142,17 +142,23 @@ export default function ClaimTimeoutForm ({
     data: Partial<AccountDataSchema>,
     onChange: (data: Partial<AccountDataSchema>) => void,
 }) {
-    if (typeof window === 'undefined') {
-        console.log("window is undefined")
-        return;
-    }
-    const provider = new ethers.BrowserProvider(window.ethereum)
+    const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
     const [contractData, setContractData] = useState<Partial<PaymentChannelDataSchema>>({
         contractAddress: '',
         senderAddress: data.account,
         isDeployed: false,
         isVerified: false
     })
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [transactionSuccess, setTransactionSuccess] = useState(false);
+
+    React.useEffect(() => {
+        if (typeof window !== 'undefined' && window.ethereum) {
+            const newProvider = new ethers.BrowserProvider(window.ethereum);
+            setProvider(newProvider);
+        }
+    }, []);
+    
     const props = {
         isConnected: isConnected,
         data: contractData, 
@@ -161,10 +167,9 @@ export default function ClaimTimeoutForm ({
         }
     }
 
-    const [isProcessing, setIsProcessing] = useState(false);
-    const [transactionSuccess, setTransactionSuccess] = useState(false);
-
     const handleSubmit = async() => {
+        if (!provider) return;
+
         setIsProcessing(true); 
         setTransactionSuccess(false);
 
@@ -204,7 +209,7 @@ export default function ClaimTimeoutForm ({
         }
     }
 
-    const steps: StepItem[] = [
+    const steps: StepItem[] = provider ? [
         {
           label: 'Basic Info',
           description: `Fill in the contract address to claim timeout.`,
@@ -212,7 +217,7 @@ export default function ClaimTimeoutForm ({
           continueLabel: 'Claim',
           handleNext: handleSubmit
         },
-    ];
+    ] : [];
 
     return (
         <Box>
