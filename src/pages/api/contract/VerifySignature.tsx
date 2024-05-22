@@ -1,6 +1,4 @@
-import util from 'ethereumjs-util';
 import { fromRpcSig, stripHexPrefix, ecrecover, pubToAddress } from 'ethereumjs-util';
-import Web3 from 'web3';
 import abi from 'ethereumjs-abi'
 
 export function prefixed (hashString: any) {

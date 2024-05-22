@@ -22,6 +22,7 @@ npm install notistack
 npm install axios
 npm install dayjs
 npm install fs
+npm install web3
 ```
 
 ## Getting Started
