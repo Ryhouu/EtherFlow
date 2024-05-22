@@ -64,7 +64,7 @@ export default function Hero() {
                 fontSize: 'clamp(3.5rem, 10vw, 4rem)',
               }}
             >
-              DeFi Escrow App
+              DeFi Cryptocurrency Escrow App
             </Typography>
             <Typography
               component="h2"  // Using a different heading tag for semantic hierarchy

@@ -121,7 +121,7 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                 </MenuItem>
                 <MenuItem
                   component="a"
-                  href="https://github.com/Ryhouu/capstone-web-dashboard"
+                  href="https://github.com/Ryhouu/EtherFlow"
                   sx={{ py: '6px', px: '12px' }}
                 >
                   <Typography variant="body2" color="text.primary">
