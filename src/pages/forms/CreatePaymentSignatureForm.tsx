@@ -113,7 +113,7 @@ export default function CreatePaymentSignatureForm ({
     onChange: (data: Partial<AccountDataSchema>) => void,
 }) {
     const [contractData, setContractData] = useState<Partial<PaymentChannelDataSchema>>({
-        senderAddress: data.account,
+        senderAddress: '',
         isVerified: false
     })
     const [isSigning, setIsSigning] = useState(false);
@@ -129,6 +129,15 @@ export default function CreatePaymentSignatureForm ({
     const [openShareFormDialog, setOpenShareFormDialog] = React.useState(false);
 
     const { data: session, status } = useSession();
+
+    React.useEffect(() => {
+        if (data && data.account) {
+            setContractData(prevData => ({
+                ...prevData,
+                senderAddress: data.account
+            }));
+        }
+    }, []);
 
     const props = {
         isConnected: isConnected,
@@ -200,6 +209,8 @@ export default function CreatePaymentSignatureForm ({
     }
 
     const handleLog = async() => {
+        if (!data || !data.account) return;
+
         if (logSignature && signSuccess) {
             console.log("Logging Contract: ", contractData)
 
@@ -256,18 +267,12 @@ export default function CreatePaymentSignatureForm ({
     ];
 
 
-
-    
-
     console.log("[Sending] Session:", session);
     console.log("[Sending] Session status:", status);
-
-
     
     const handleOpenDial = () => setOpenDial(true);
     const handleCloseDial = () => setOpenDial(false);
     
-
     const actions = [
         { icon: <FileCopyIcon />, name: 'Copy', onClick: () => {} },
         { icon: <SaveIcon />, name: 'Save', onClick: () => {} },

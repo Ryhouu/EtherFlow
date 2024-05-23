@@ -199,13 +199,26 @@ export default function ExtendPaymentChannelForm ({
     const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
     const [contractData, setContractData] = useState<Partial<PaymentChannelDataSchema>>({
         contractAddress: '',
-        senderAddress: data.account,
+        senderAddress: '',
         isDeployed: false,
         isVerified: false
     })
     const [isProcessing, setIsProcessing] = useState(false);
     const [transactionSuccess, setTransactionSuccess] = useState(false);
 
+    React.useEffect(() => {
+        if (typeof window !== 'undefined' && window.ethereum) {
+            const newProvider = new ethers.BrowserProvider(window.ethereum);
+            setProvider(newProvider);
+        }
+        if (data && data.account) {
+            setContractData(prevData => ({
+                ...prevData,
+                senderAddress: data.account
+            }));
+        }
+    }, []);
+    
     const props = {
         isConnected: isConnected,
         data: contractData, 
@@ -214,12 +227,6 @@ export default function ExtendPaymentChannelForm ({
         }
     }
 
-    React.useEffect(() => {
-        if (typeof window !== 'undefined' && window.ethereum) {
-            const newProvider = new ethers.BrowserProvider(window.ethereum);
-            setProvider(newProvider);
-        }
-    }, []);
 
     const handleSubmit = async() => {
         if (!provider) return;

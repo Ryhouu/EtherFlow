@@ -8,6 +8,7 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { List, ListItem, ListItemText } from '@mui/material';
 
 export default function FAQ() {
   const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -125,19 +126,23 @@ export default function FAQ() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography
-              variant="body2"
-              gutterBottom
-              sx={{ maxWidth: { sm: '100%', md: '70%' } }}
-            >
-              Sender can create a payment channel by
-              <ul>
-                <li>Escrowing a certain amount of Sepolia Ether.</li>
-                <li>Entering the recipient’s address.</li>
-                <li>Entering an expiration.</li>
-              </ul>
+            <Typography variant="body2" gutterBottom>
+            Sender can create a payment channel by
+            </Typography>
+            <List>
+              <ListItem>
+                <ListItemText primary="Escrowing a certain amount of Sepolia Ether." />
+              </ListItem>
+              <ListItem>
+                <ListItemText primary="Entering the recipient’s address." />
+              </ListItem>
+              <ListItem>
+                <ListItemText primary="Entering an expiration." />
+              </ListItem>
+            </List>
+            <Typography variant="body2" gutterBottom>
               Note: This action costs Sepolia Ether.
-              <br></br>
+              <br />
               For the duration of this payment channel, the sender can only make cumulative payments less than or equal to the amount escrowed.
               <br></br>
               If the expiration date passes and the receiver has not claimed their payment, the sender can withdraw all the amount escrowed from a payment channel by &quot;claiming a timeout&quot;, which voids any payment signatures they sent to the receiver.
@@ -158,25 +163,27 @@ export default function FAQ() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography
-              variant="body2"
-              gutterBottom
-              sx={{ maxWidth: { sm: '100%', md: '70%' } }}
-            >
-              Sender can create a payment signature by 
-              <ul>
-                <li>Entering a payment channel’s contract address.</li>
-                <li>Entering the cumulative amount to promise to pay to the set recipient’s address.</li>
-              </ul>
+            <Typography variant="body2" gutterBottom>
+            Sender can create a payment signature by:
+            </Typography>
+            <List>
+              <ListItem>
+                <ListItemText primary="Entering a payment channel’s contract address." />
+              </ListItem>
+              <ListItem>
+                <ListItemText primary="Entering the cumulative amount to promise to pay to the set recipient’s address." />
+              </ListItem>
+            </List>
+            <Typography variant="body2" gutterBottom>
               Note: This action does not cost Sepolia Ether.
-              <br></br>
-              The payment signature, contract address, cumulative amount, and sender address should be sent to the receiver off-chain: e.g. e-mail.
-              <br></br>
-              We can help you automatically send e-mail to the receiver including your selected signed signatures! You can go to &quot;Account Settings&quot; at the top-right corner, and Sign In with Google first. Then, click &quot;My Signatures&quot;, select the signatures you want to send to the receiver at once, and fill in their email address, and click &quot;Share&quot;.
+              <br />
+              The payment signature, contract address, cumulative amount, and sender address should be sent to the receiver off-chain: e.g., email.
+              <br />
+              We can help you automatically send email to the receiver including your selected signed signatures! You can go to "Account Settings" at the top-right corner, and Sign In with Google first. Then, click "My Signatures", select the signatures you want to send to the receiver at once, fill in their email address, and click "Share".
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion
+        {/* <Accordion
           expanded={expanded === 'panel5'}
           onChange={handleChange('panel5')}
         >
@@ -285,7 +292,7 @@ export default function FAQ() {
               Notice that during the duration of a payment channel, a receiver will likely receive multiple payment signatures, where each successive payment signature is likely for a higher cumulative payment amount. In most cases, the receiver should cash out the payment signature with the highest cumulative payment amount.
             </Typography>
           </AccordionDetails>
-        </Accordion>
+        </Accordion> */}
       </Box>
     </Container>
   );

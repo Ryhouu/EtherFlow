@@ -71,6 +71,7 @@ const BasicInfoStepForm = ({
             })
 
             if (verifyContractResult) {
+                console.log("Verify Contract Result:", verifyContractResult)
                 setVerifyContractStatus(verifyContractResult.status)
                 const resJson = await verifyContractResult.json()
                 setVerifyContractAlertMsg(resJson.message)
@@ -225,7 +226,7 @@ export default function VerifySignatureForm ({
     
 
     const handleSubmit = async() => {
-        if (!provider) return;
+        if (!provider || !data || !data.account) return;
 
         const contractAddress = contractData.contractAddress ? contractData.contractAddress : '';
         const signature = contractData.signature ? contractData.signature : '';

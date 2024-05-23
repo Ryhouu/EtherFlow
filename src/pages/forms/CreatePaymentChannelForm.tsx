@@ -181,7 +181,7 @@ export default function CreatePaymentChannelForm ({
 }) {
     const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
     const [contractData, setContractData] = useState<Partial<PaymentChannelDataSchema>>({
-        senderAddress: data.account,
+        senderAddress: '',
         isDeployed: false,
         isVerified: false
     })
@@ -193,6 +193,12 @@ export default function CreatePaymentChannelForm ({
         if (typeof window !== 'undefined' && window.ethereum) {
             const newProvider = new ethers.BrowserProvider(window.ethereum);
             setProvider(newProvider);
+        }
+        if (data && data.account) {
+            setContractData(prevData => ({
+                ...prevData,
+                senderAddress: data.account
+            }));
         }
     }, []);
 

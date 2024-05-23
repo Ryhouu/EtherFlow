@@ -180,6 +180,8 @@ export default function ClaimPaymentForm ({
     }, []);
 
     const handleFetch = async () => {
+        if (!data || !data.account) return;
+        
         const res = await fetchWithToast(`/api/log/verified-signatures?account=${data.account}`, {
             method: 'GET',
         })

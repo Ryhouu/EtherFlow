@@ -83,10 +83,10 @@ export default function SendMainPage() {
     };
 
     const forms = [
-        <CreatePaymentChannelForm key={0} {...accountMenuProps} />,
-        <CreatePaymentSignatureForm key={1} {...accountMenuProps} />,
-        <ExtendPaymentChannelForm key={2} {...accountMenuProps} />,
-        <ClaimTimeoutForm key={3} {...accountMenuProps} />,
+        <CreatePaymentChannelForm key="sender-0" {...accountMenuProps} />,
+        <CreatePaymentSignatureForm key="sender-1" {...accountMenuProps} />,
+        <ExtendPaymentChannelForm key="sender-2" {...accountMenuProps} />,
+        <ClaimTimeoutForm key="sender-3" {...accountMenuProps} />,
     ]
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [activeForm, setActiveForm] = useState<React.ReactElement>()

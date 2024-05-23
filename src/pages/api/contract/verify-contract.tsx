@@ -19,13 +19,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const emptyCode = '0x';
         const bytecodePath = path.resolve(process.cwd(), 'contracts', 'PaymentChannel.bytecode');
         const bytecode = fs.readFileSync(bytecodePath, 'utf8');
+
+        
         
         if (getCode === emptyCode) {
-            res.status(404).json({ message: "Payment channel does not exist." })
+            return res.status(404).json({ message: "Payment channel does not exist." })
         } else if (getBalance === BigInt(0)) {
-            res.status(400).json({ message: "Payment channel escrowed 0 ETH or closed." })
-        } else if (getCode !== bytecode) {
-            res.status(405).json({ message: "Payment channel has been altered." })
+            return res.status(400).json({ message: "Payment channel escrowed 0 ETH or closed." })
+        } else if (getCode.trim() !== bytecode.trim()) {
+            return res.status(406).json({ message: "Payment channel has been altered." })
         }
         return res.status(200).json({ message: "Payment channel verified!" })
     } catch (error) {

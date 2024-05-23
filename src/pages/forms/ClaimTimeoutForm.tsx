@@ -145,7 +145,7 @@ export default function ClaimTimeoutForm ({
     const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
     const [contractData, setContractData] = useState<Partial<PaymentChannelDataSchema>>({
         contractAddress: '',
-        senderAddress: data.account,
+        senderAddress: '',
         isDeployed: false,
         isVerified: false
     })
@@ -156,6 +156,12 @@ export default function ClaimTimeoutForm ({
         if (typeof window !== 'undefined' && window.ethereum) {
             const newProvider = new ethers.BrowserProvider(window.ethereum);
             setProvider(newProvider);
+        }
+        if (data && data.account) {
+            setContractData(prevData => ({
+                ...prevData,
+                senderAddress: data.account
+            }));
         }
     }, []);
     
