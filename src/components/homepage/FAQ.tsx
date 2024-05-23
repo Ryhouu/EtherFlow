@@ -179,7 +179,7 @@ export default function FAQ() {
               <br />
               The payment signature, contract address, cumulative amount, and sender address should be sent to the receiver off-chain: e.g., email.
               <br />
-              We can help you automatically send email to the receiver including your selected signed signatures! You can go to "Account Settings" at the top-right corner, and Sign In with Google first. Then, click "My Signatures", select the signatures you want to send to the receiver at once, fill in their email address, and click "Share".
+              We can help you automatically send email to the receiver including your selected signed signatures! You can go to &quot;Account Settings&quot; at the top-right corner, and Sign In with Google first. Then, click &quot;My Signatures&quot;, select the signatures you want to send to the receiver at once, fill in their email address, and click &quot;Share&quot;.
             </Typography>
           </AccordionDetails>
         </Accordion>
